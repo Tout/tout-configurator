@@ -4,8 +4,9 @@ Bundler.setup
 require 'configurator'
 
 Configurator.configure do |config|
-  config.rails_env = 'development'
+  config.config_selector = 'development'
   config.quiet_loading = true
+  config.test_environment = true
 end
 
 RSpec.configure do |config|

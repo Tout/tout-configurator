@@ -32,12 +32,12 @@ describe ConfigHelper do
   context "a required environment variable is not present" do
     it "should raise an error" do
       ENV.delete('some_environment_variable')
-      expect {ConfigHelper.required_env_variable('some_environment_variable')}.to raise_error(ConfigHelper::ConfigurationException)
+      expect {ConfigHelper.required_env_variable('some_environment_variable')}.to raise_error(Configurator::ConfigurationError)
     end
 
     it "should raise an error" do
       ENV.delete('some_environment_variable')
-      expect {ConfigHelper.required_env_variable_hash('some_environment_variable')}.to raise_error(ConfigHelper::ConfigurationException)
+      expect {ConfigHelper.required_env_variable_hash('some_environment_variable')}.to raise_error(Configurator::ConfigurationError)
     end
   end 
 
@@ -55,6 +55,18 @@ describe ConfigHelper do
       ENV.delete('some_environment_variable')
       expect(ConfigHelper.optional_env_variable_hash('some_environment_variable')).to be_nil
     end
+  end
+
+  context "a hash string environment variable that is improperly formatted" do
+    before do
+      ENV['some_environment_variable'] = '1,2,3,4'
+    end
+
+    it "should raise an error" do
+      expect {ConfigHelper.optional_env_variable_hash('some_environment_variable')}.to raise_error(Configurator::ConfigFormatError)
+      expect {ConfigHelper.required_env_variable_hash('some_environment_variable')}.to raise_error(Configurator::ConfigFormatError)
+    end
+
   end
 
 end

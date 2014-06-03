@@ -4,7 +4,7 @@ require_relative '../lib/configurator/config_loader'
 describe ConfigLoader do
 
   before do
-    @configured_environment = Configurator.configuration.rails_env
+    @configured_environment = Configurator.configuration.config_selector
     @example_hash = {@configured_environment => {entry_1: 1, 
                                                  entry_2: 2, 
                                                  entry_3: {entry_4: 4}
