@@ -12,13 +12,19 @@ module ConfigLoader
   end
 
   def self.get_path file_name
-    file_name = '/' + file_name + '.yml' unless file_name =~ /.*\.yml/
-    path = yaml_files_in_search_path.select {|file| file =~ /#{file_name}/ }
+    file = prepare_file_name file_name
+    path = yaml_files_in_search_path.select {|f| f =~ /#{file}/ }
     dne_err_msg = "Error loading #{file_name}, file does not exist"
     multiple_file_err_msg = "Error loading #{file_name}, multiple paths found to file: #{path}"
-    raise Configurator::ConfigLoadError, dne_err_msg if path.empty?
-    raise Configurator::ConfigLoadError, multiple_file_err_msg if path.count > 1
+    raise Configurator::ConfigLoadError, dne_err_msg if path.empty? && !Configurator.configuration.test_environment
+    raise Configurator::ConfigLoadError, multiple_file_err_msg if path.count > 1 && !Configurator.configuration.test_environment
     path[0]
+  end
+
+  def self.prepare_file_name file_name
+    file_name = file_name + '.yml' unless file_name =~ /.*\.yml/
+    file_name = "\/" + file_name unless file_name =~ /\/.*\.yml/
+    file_name
   end
 
   def self.yaml_files_in_search_path
