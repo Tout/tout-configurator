@@ -13,7 +13,7 @@ module Configurator
       config.configurator = Configurator.configuration 
     end
 
-    config.after_initialize do 
+    config.before_eager_load do 
       Configurator.configure do |config|
         search_path = File.directory?(Rails.root.join('config')) ? Rails.root.join('config') : Rails.root
         config.search_path = search_path
