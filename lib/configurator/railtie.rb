@@ -7,7 +7,7 @@ module Configurator
     config.before_configuration do 
       Configurator.configure do |config|
         config.config_selector = Rails.env
-        config.quiet_loading = false
+        config.quiet_loading = true
         config.test_environment = false
       end
       config.configurator = Configurator.configuration 
