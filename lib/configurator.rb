@@ -1,5 +1,5 @@
 require_relative "./configurator/version"
-require_relative "./configurator/hash_ext" unless defined?(::ActiveSupport::HashWithIndifferentAccess)
+require_relative "./configurator/hash_ext" unless defined?(::Rails::ActiveSupport::HashWithIndifferentAccess)
 require_relative "./configurator/configuration"
 require_relative "./configurator/config_loader"
 require_relative "./configurator/config_helper"
