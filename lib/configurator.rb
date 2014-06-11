@@ -1,5 +1,4 @@
 require_relative "./configurator/version"
-require_relative "./configurator/hash_ext"
 require_relative "./configurator/configuration"
 require_relative "./configurator/config_loader"
 require_relative "./configurator/config_helper"
