@@ -8,6 +8,7 @@ module ConfigLoader
   def self.load path
     Configurator.logger.info "Loading: '#{path}'" unless Configurator.configuration.quiet_loading
     config = YAML.load(ERB.new(File.read(path)).result)[Configurator.configuration.config_selector]
+    Configurator.logger.warn "WARNING: #{Configurator.configuration.config_selector} not set in #{path}"
     config.with_indifferent_access
   end
 
