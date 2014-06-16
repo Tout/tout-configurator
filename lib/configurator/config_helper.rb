@@ -66,6 +66,7 @@ module ConfigHelper
 
   def self.warn_optional env_var
     unless (ENV[env_var] || Configurator.configuration.test_environment)
+      warn_msg = MESSAGES[:optional] % env_var
       Configurator.logger.warn warn_msg
     end
   end
